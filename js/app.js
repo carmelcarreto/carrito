@@ -2,6 +2,7 @@
 const carrito = document.getElementById('carrito');
 const cursos = document.getElementById('lista-cursos');
 const listaCursos = document.querySelector('#lista-carrito tbody');
+const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 
 //Listeners
 cargarEventListeners();
@@ -12,6 +13,9 @@ function cargarEventListeners(){
 
     //Cuando se elimina un curso del carrito
     carrito.addEventListener('click', eliminarCurso);
+
+    //Al vaciar el carrito
+    vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
 }
 
 
@@ -65,4 +69,17 @@ function eliminarCurso(e){
     if(e.target.classList.contains('borrar-curso')){
         e.target.parentElement.parentElement.remove();
     }
+}
+
+//Elimina los cursos del carrito en el DOM
+function vaciarCarrito(){
+
+    //Forma lenta para eliminar un elemento del DOM
+    //listaCursos.innerHTML = '';
+
+    //Forma rapida (recomendada)
+    while(listaCursos.firstChild){
+        listaCursos.removeChild(listaCursos.firstChild);
+    }
+    return false;
 }
