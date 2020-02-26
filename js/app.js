@@ -16,6 +16,9 @@ function cargarEventListeners(){
 
     //Al vaciar el carrito
     vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+
+    //Al cargar el documento, mostrar Local Storage
+    document.addEventListener('DOMContentLoaded', leerLocalStorage);
 }
 
 
@@ -98,12 +101,37 @@ function guardarCursoLocalStorage(curso){
 
 //Comprueba que haya elementos en Local Storage
 function obtenerCursosLocalStorage(){
-    let cursoLS;
+    let cursosLS;
     //comprobamos si hay algo en el Local Storage
     if(localStorage.getItem('curos') === null){
-       cursoLS=[]; 
+       cursosLS=[]; 
     }else{
-        cursoLS.JSON.parse( localStorage.getItem('cursos'));
+        cursosLS.JSON.parse( localStorage.getItem('cursos'));
     }
-    return cursoLS;
+    return cursosLS;
+}
+
+//Imprime los cursos de Local Storage en el carrito
+function leerLocalStorage(){
+    let cursosLS;
+
+    cursosLS = obtenerCursosLocalStorage();
+
+    cursosLS.forEach(function(curso){
+        //construir el template
+        const row = document.createElement('tr');
+        row.innerHTML=`
+            <td>
+                <img src="${curso.imagen}" width=100>
+            </td>
+            <td>${curso.titulo}</td>
+            <td>${curso.precio}</td>
+            <td>
+                <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
+            </td>
+        `;
+        listaCursos.appendChild(row);
+    });
+    
+
 }
